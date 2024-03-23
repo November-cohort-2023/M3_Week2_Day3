@@ -4,6 +4,7 @@ const Movie = require('../models/Movie.model')
 
 
 
+
 router.get('/movies',(req,res)=>{
 
     Movie.find()
@@ -17,6 +18,8 @@ router.get('/movies',(req,res)=>{
 
 
 router.get('/movies/:id',(req,res)=>{
+
+   
 
     Movie.findById(req.params.id)
     .then((oneMovie)=>{
