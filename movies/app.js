@@ -21,7 +21,7 @@ app.use("/", indexRoutes);
 
 app.use('/api',require('./routes/movies.routes'))
 
-app.use('/',require('./routes/actors.routes'))
+app.use('/api',require('./routes/actors.routes'))
 
 app.use('/api',require('./routes/directors.routes'))
 

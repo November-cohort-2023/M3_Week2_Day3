@@ -11,6 +11,7 @@ router.get('/movies',(req,res)=>{
     // Add populate() to all the get routes
     Movie.find()
     .populate("director")
+    .populate('actors')
     .then((allMovies)=>{
         res.json(allMovies)
     })
