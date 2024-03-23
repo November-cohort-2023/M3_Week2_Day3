@@ -10,11 +10,6 @@ router.get('/juan',(req,res)=>{
   res.json("JUANS ROUTE")
 })
 
-router.get('/movies',(req,res)=>{
-
-
-  res.json('ALL MOVIES')
-})
 
 
 module.exports = router;
