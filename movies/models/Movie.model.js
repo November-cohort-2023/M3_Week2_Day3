@@ -25,6 +25,12 @@ const movieSchema = new mongoose.Schema(
             type:Number,
             min:0,
             max:10
+        },
+        actors:{
+            type: [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Actor"
+            }]
         }
       }
 )
