@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+const Actor = require("../models/Actor.model");
 const Director = require("../models/Director.model");
 const Movie = require('../models/Movie.model')
 
@@ -10,8 +11,8 @@ router.get('/movies',(req,res)=>{
 
     // Add populate() to all the get routes
     Movie.find()
-    .populate("director")
-    .populate('actors')
+    .populate("director actors")
+    // .populate('actors')
     .then((allMovies)=>{
         res.json(allMovies)
     })
@@ -26,7 +27,7 @@ router.get('/movies/:id',(req,res)=>{
    
 
     Movie.findById(req.params.id)
-    .populate('director')
+    .populate('director actors')
     .then((oneMovie)=>{
 
         if(oneMovie === null){
@@ -46,20 +47,21 @@ router.get('/movies/:id',(req,res)=>{
 })
 
 
-router.post('/movies',(req,res)=>{
+router.post('/movies', async (req,res)=>{
     console.log(req.body)
 
-    Movie.create(req.body)
-    .then((createdMovie)=>{
-        return Director.findByIdAndUpdate(req.body.director,{$push:{movies:createdMovie._id}})
-    })
-    .then(director=>{
-        res.json(director)
-    })
-    .catch(err=>{
-        console.log(err)
+    try{
+        const movie = await  Movie.create(req.body)
+
+        const director = await Director.findByIdAndUpdate(req.body.director,{$push:{movies:createdMovie._id}})
+            
+        res.json(movie)
+    }
+    catch(err){
         res.json(err)
-    })
+    }
+
+   
 
 })
 
