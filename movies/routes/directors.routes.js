@@ -17,6 +17,18 @@ router.post('/directors',(req,res)=>{
 
 
 
+router.get('/directors',(req,res)=>{
+
+    Director.find()
+    .then((allDirectors)=>{
+        res.json(allDirectors)
+    })
+})
+
+
+
+
+
 
 
 

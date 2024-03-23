@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+const Director = require("../models/Director.model");
 const Movie = require('../models/Movie.model')
 
 
@@ -7,7 +8,9 @@ const Movie = require('../models/Movie.model')
 
 router.get('/movies',(req,res)=>{
 
+    // Add populate() to all the get routes
     Movie.find()
+    .populate("director")
     .then((allMovies)=>{
         res.json(allMovies)
     })
@@ -22,6 +25,7 @@ router.get('/movies/:id',(req,res)=>{
    
 
     Movie.findById(req.params.id)
+    .populate('director')
     .then((oneMovie)=>{
 
         if(oneMovie === null){
@@ -46,7 +50,10 @@ router.post('/movies',(req,res)=>{
 
     Movie.create(req.body)
     .then((createdMovie)=>{
-        res.json(createdMovie)
+        return Director.findByIdAndUpdate(req.body.director,{$push:{movies:createdMovie._id}})
+    })
+    .then(director=>{
+        res.json(director)
     })
     .catch(err=>{
         console.log(err)
