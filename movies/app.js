@@ -17,11 +17,14 @@ require("./config")(app);
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
-app.use("/api", indexRoutes);
+app.use("/", indexRoutes);
 
-app.use('/api/movies',require('./routes/movies.routes'))
+app.use('/api',require('./routes/movies.routes'))
 
-app.use('/actors',require('./routes/actors.routes'))
+app.use('/',require('./routes/actors.routes'))
+
+app.use('/api',require('./routes/directors.routes'))
+
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
