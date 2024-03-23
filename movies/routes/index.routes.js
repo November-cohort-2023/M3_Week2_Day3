@@ -5,11 +5,6 @@ router.get("/", (req, res, next) => {
 });
 
 
-router.get('/juan',(req,res)=>{
-
-  res.json("JUANS ROUTE")
-})
-
 
 
 module.exports = router;

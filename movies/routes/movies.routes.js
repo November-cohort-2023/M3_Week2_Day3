@@ -47,14 +47,16 @@ router.get('/movies/:id',(req,res)=>{
 })
 
 
-router.post('/movies', async (req,res)=>{
+/* router.post('/movies', async (req,res)=>{
     console.log(req.body)
 
     try{
         const movie = await  Movie.create(req.body)
 
-        const director = await Director.findByIdAndUpdate(req.body.director,{$push:{movies:createdMovie._id}})
+        const director = await Director.findByIdAndUpdate(req.body.director,{$push:{movies:movie._id}})
             
+        const actors = await Actor.updateMany({ _id: { $in: req.body.actors } },{$push:{movies:req.body._id}})
+
         res.json(movie)
     }
     catch(err){
@@ -64,7 +66,31 @@ router.post('/movies', async (req,res)=>{
    
 
 })
+ */
 
+router.post('/movies', async (req,res)=>{
+    console.log(req.body)
+
+    try{
+        const movie = await Movie.create(req.body);
+
+        const director = await Director.findByIdAndUpdate(
+            req.body.director,
+            { $push: { movies: movie._id } }, 
+            { new: true }
+        );
+
+        const actors = await Actor.updateMany(
+            { _id: { $in: req.body.actors } },
+            { $push: { movies: movie._id } } 
+        );
+
+        res.json(movie);
+    }
+    catch(err){
+        res.json(err);
+    }
+});
 
 router.put('/movies/:id',(req,res)=>{
 
