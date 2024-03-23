@@ -12,7 +12,10 @@ const movieSchema = new mongoose.Schema(
         year:{
             type:Number
         },
-        director:String,
+        director:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"Director"
+        },
         duration:String,
         genre:{
             type:[String]
